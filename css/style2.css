@@ -168,3 +168,11 @@ a.article:hover {
     display: none;
   }
 }
+
+.card-body {
+  font-size: 12px;
+}
+
+.card-title {
+  font-size: 14px;
+}
