@@ -1,31 +1,20 @@
 <?php 
+require_once '../farmasi/functions.php';
 
-  require_once '../farmasi/functions.php';
+    if(isset( $_POST['register'] )){
 
-  if(isset($_POST['login'])){
-
-    $username = $_POST["username"];
-    $password = $_POST["password"];
-    
-    $result = pg_query($conn, "SELECT * FROM users WHERE username = '$username'");
- 
-    if(pg_num_rows($result)){
-      $row = pg_fetch_assoc($result);
-        if(password_verify($password, $row['password'])){
-          if($row['level'] == "admin"){
-            header("Location: ../farmasi/home.php");
-            exit;
-          }else{
-            header("Location: ../puskesmas/puskesmas.php");
-            exit;
-          }
-
+        if( (register($_POST)) > 0 ){
+            echo "<script type='text/javascript'>
+            alert('berhasil');
+            document.location.href = 'login.php'; 
+            </script>";
+                
+        }else{
+            echo pg_last_error($conn);
         }
-      
     }
-  }
-
 ?>
+
 
 
 <!DOCTYPE html>
@@ -38,18 +27,19 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../../assets/css/util.css" />
     <link rel="stylesheet" type="text/css" href="../../assets/css/main.css" />
+    
   </head>
   <body>
-  <div class="limiter">
+    <div class="limiter">
       <div class="container-login100">
         <div class="wrap-login100">
           <div class="login100-form-title" style="background-image: url(../../assets/images/logo.png)"></div>
-          <div class="login" style="color: #3333">LOGIN</div>
+          <div class="login">Register</div>
 
-          <form class="login100-form validate-form" method="post">
+          <form class="login100-form validate-form" action="" method="post">
             <div class="wrap-input100 validate-input m-b-26" >
-              <span class="label-input100">Email</span>
-              <input class="input100" type="text" name="username" placeholder="Enter Email" />
+              <span class="label-input100">username</span>
+              <input class="input100" type="text" name="username" placeholder="Enter Email" required/>
               <span class="focus-input100"></span>
             </div>
 
@@ -59,18 +49,15 @@
               <span class="focus-input100"></span>
             </div>
 
-            <div class="flex-sb-m w-full p-b-30">
-              <div class="contact100-form-checkbox">
-             
-                <a href="registrasi.php" class="txt1"> Registrasi </a>
-               
-              </div>
-
-              
+            <div class="wrap-input100 validate-input m-b-18" >
+              <span class="label-input100">Konfirmasi password</span>
+              <input class="input100" type="password" name="password2" placeholder="Enter password" />
+              <span class="focus-input100"></span>
             </div>
 
             <div class="container-login100-form-btn">           
-              <a href=""><button class="login100-form-btn" type="submit" name="login">Login</button></a>
+              <a href=""><button class="login100-form-btn" name="register">Register</button></a>
+              <a href="login.php">Login</a>
 
             </div>
           </form>

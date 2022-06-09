@@ -129,6 +129,10 @@ a.article:hover {
   color: #100db1 !important;
 }
 
+#cover{
+  background-color: lightgrey;
+}
+
 /* ---------------------------------------------------
     CONTENT STYLE
 ----------------------------------------------------- */
@@ -153,6 +157,15 @@ a.article:hover {
 
 #sidebarCollapse{
   color: fff;
+}
+
+canvas{
+
+  width:300px !important;
+  height:200px !important;
+  display: inline-block;
+  margin-right: 150px;
+
 }
 
 @media (max-width: 768px) {

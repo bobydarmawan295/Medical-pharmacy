@@ -9,14 +9,13 @@
     <title>Dashboard - Puskesmas</title>
 
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href="../../assets/css/style2.css">
-    <link rel="stylesheet" href="../../assets/css/style.css">
-    <link rel="stylesheet" href="../../assets/css/settings.css">
     
 
 </head>
@@ -30,12 +29,12 @@
                 <img src="../../assets/images/logo.png" alt="" width="200px">
             </div>
 
-            <ul class="list-unstyled components">
+            <ul class="list-unstyled components"> 
                 <li>
-                    <a href="#"><i class='bx-fw bx bxs-dashboard bx-sm'></i>Dashboard</a>
+                    <a href="puskesmas.php"><i class='bx-fw bx bxs-dashboard bx-sm'></i>Dashboard</a>
                 </li>
                 <li>
-                    <a href="obatPuskesmas.php"><i class='bx-fw bx bxs-notepad bx-sm'></i>Stok Obat</a>
+                    <a href="puskesmas.php"><i class='bx-fw bx bxs-notepad bx-sm'></i>Stok Obat</a>
                 </li>
                 <li>
                     <a href="puskesmas_formreq.php"><i class='bx-fw bx bxs-user-detail bx-sm'></i>Form Request</a>

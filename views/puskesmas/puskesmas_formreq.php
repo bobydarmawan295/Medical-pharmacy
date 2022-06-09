@@ -15,7 +15,7 @@
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="../style/style2.css">
+    <link rel="stylesheet" href="../../assets/css/style2.css">
     
 
 </head>
@@ -26,12 +26,15 @@
         <!-- Sidebar  -->
         <nav id="sidebar">
             <div class="sidebar-header">
-                <img src="image/logo.png" alt="" width="200px">
+                <img src="../../assets/images/logo.png" alt="" width="200px">
             </div>
 
             <ul class="list-unstyled components">
                 <li>
-                    <a href="puskesmas.php"><i class='bx-fw bx bxs-notepad bx-sm'></i>Stok Obat</a>
+                    <a href="puskesmas.php"><i class='bx-fw bx bxs-dashboard bx-sm'></i>Dashboard</a>
+                </li>
+                <li>
+                    <a href="obatPuskesmas.php"><i class='bx-fw bx bxs-notepad bx-sm'></i>Stok Obat</a>
                 </li>
                 <li>
                     <a href="#"><i class='bx-fw bx bxs-user-detail bx-sm'></i>Form Request</a>
@@ -42,10 +45,10 @@
             <ul class="list-unstyled CTAs">
                 
                 <li>
-                    <a href="puskesmas_pengaturan.html" class="download">Settings</a>
+                    <a href="puskesmas_pengaturan.php" class="download">Settings</a>
                 </li>
                 <li>
-                    <a href="login as.html" class="article" >Logout</a>
+                    <a href="../auth/login.php" class="article" >Logout</a>
                 </li>
             </ul>
         </nav>
@@ -127,7 +130,7 @@
     <!-- jQuery Custom Scroller CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-    <script src="../js/datatables-simple-demo.js"></script>
+    <script src="../../assets/js/datatables-simple-demo.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#sidebar").mCustomScrollbar({
