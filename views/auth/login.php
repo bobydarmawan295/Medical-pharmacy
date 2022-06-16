@@ -1,5 +1,5 @@
 <?php 
-
+  session_start();
   require_once '../farmasi/functions.php';
 
   if(isset($_POST['login'])){
@@ -12,16 +12,17 @@
     if(pg_num_rows($result)){
       $row = pg_fetch_assoc($result);
         if(password_verify($password, $row['password'])){
+          $level = $row["level"];
+          $_SESSION["level"] = $level;
           if($row['level'] == "admin"){
             header("Location: ../farmasi/home.php");
             exit;
           }else{
-            header("Location: ../puskesmas/puskesmas.php");
+            header("Location: ../puskesmas/stokPuskesmas.php");
             exit;
           }
 
         }
-      
     }
   }
 

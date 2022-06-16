@@ -1,5 +1,5 @@
 <?php
-    require_once 'functions.php';
+    require_once 'functionsPuskesmas.php';
 
     $id = $_GET['id'];
 
@@ -7,7 +7,7 @@
         echo "
            <script>
            alert('data berhasil dihapus');
-           document.location.href = 'stokObat.php';
+           document.location.href = 'stokPuskesmas.php';
            </script>
         ";
        
@@ -15,7 +15,7 @@
        echo "
            <script>
            alert('gagal dihapus');
-           document.location.href = 'stokObat.php';
+           document.location.href = 'stokPuskesmas.php';
            </script>
         ";
     }

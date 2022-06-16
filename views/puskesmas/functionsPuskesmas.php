@@ -14,21 +14,23 @@
 
     function tambah($data){
         global $conn;
-        $kode_obat = htmlspecialchars($data['kode_obat']);
+        // $kode_obat = htmlspecialchars($data['kode_obat']);
         $nama_obat = htmlspecialchars($data['nama_obat']);
-        $satuan = htmlspecialchars($data['satuan']);
+        $satuan= htmlspecialchars($data['satuan']);
+        $jumlah= htmlspecialchars($data['jumlah']);
+        $date= date('Y-m-d');
 
-        $query = "INSERT INTO obat(kode_obat, nama_obat, satuan) VALUES('$kode_obat','$nama_obat','$satuan')";
+        $query = "INSERT INTO stok(kode_obat, jumlah,updated_at,satuan) VALUES('$nama_obat','$jumlah','$date','$satuan')";
 
         $insert = pg_query($conn, $query);
     
-         return pg_affected_rows($insert);
+        return pg_affected_rows($insert);
     }
 
-    function hapus($kode_obat){
+    function hapus($id){
         global $conn;
 
-        $delete = pg_query($conn, "DELETE FROM obat WHERE kode_obat = '$kode_obat'");
+        $delete = pg_query($conn, "DELETE FROM stokPuskesmas WHERE id = '$id'");
 
         return pg_affected_rows($delete);
 
@@ -37,15 +39,18 @@
     function ubah($data){
 
         global $conn;
-
-        $kode_obat = $data['kode_obat'];
+        $id = htmlspecialchars($data['id']);
         $nama_obat = htmlspecialchars($data['nama_obat']);
-        $satuan = htmlspecialchars($data['satuan']);
+        $satuan= htmlspecialchars($data['satuan']);
+        $jumlah= htmlspecialchars($data['jumlah']);
+        $date= date('Y-m-d');
 
-        $query = "UPDATE obat SET
-                  nama_obat = '$nama_obat',
-                  satuan = '$satuan'
-                  WHERE kode_obat = '$kode_obat'";
+        $query = "UPDATE stokPuskesmas SET
+                  kode_obat = '$nama_obat',
+                  satuan = '$satuan',
+                  jumlah_stok = '$jumlah',
+                  tanggal_update = '$date'
+                  WHERE id = '$id'";
 
         $ubah = pg_query($conn, $query);
     

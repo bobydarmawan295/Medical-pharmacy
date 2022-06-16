@@ -2,17 +2,22 @@
   require_once '../partials/header.php';
   require_once 'functions.php';
 
-  $request= query("SELECT * FROM distribusi
-  INNER JOIN puskesmas ON distribusi.kode_puskesmas = puskesmas.kode_puskesmas  ORDER BY waktu_distribusi DESC 
-  ");
+  $id = $_GET['kode_puskesmas'];
+ 
+  $request= query("SELECT * FROM request
+                INNER JOIN obat ON request.kode_obat = obat.kode_obat
+                WHERE kode_puskesmas = '$id'
+                ");
+// $stok = query("SELECT * FROM stok INNER JOIN obat ON stok.kode_obat = obat.kode_obat WHERE id= '$id'")[0];
+
   
 ?>
 
         <div id="layoutSidenav_content">
                 <main>
+                <button type="button" class="btn btn-info text-center ml-4" ><i class='bx-fw bx bx-arrow-back' ></i><a href="request.php">&nbsp;Kembali</a></button>
                     <div class="container-fluid px-4">
                         <div class="card mb-4">
-                            
                         </div>
                         <div class="card mb-4">
                             <div class="card-header">
@@ -24,19 +29,17 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama Puskesmas</th>
-                                            <th>Jumlah Distribusi</th>
-                                            <th>waktu_distribusi</th>
-                                            <th>Status</th>
+                                            <th>Nama obat</th>
+                                            <th>Jumlah</th>
+                                            <th>Satuan</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama Puskesmas</th>
-                                            <th>Jumlah Distribusi</th>
-                                            <th>waktu_distribusi</th>
-                                            <th>Status</th>
+                                            <th>Nama obat</th>
+                                            <th>Jumlah</th>
+                                            <th>Satuan</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -44,21 +47,19 @@
                                         <?php foreach( $request as $row ) : ?>
                                                 <tr>
                                                 <td><?= $i ?></td>
-                                                <td><?= $row["nama_puskesmas"] ?></td>
-                                                <td><?= $row["jumlah_distribusi"] ?></td>
-                                                <td><?= $row["waktu_distribusi"] ?></td>
+                                                <td><?= $row["nama_obat"] ?></td>
+                                                <td><?= $row["jumlah_request"] ?></td>
+                                                <td><?= $row["satuan_obat"] ?></td>
                                                 <td>
-
-                                                <button type="button" class="btn btn-success"><a href="detailRequest.php?kode_puskesmas=<?= $row["kode_puskesmas"]; ?>">Berhasil</a></button>&nbsp;
-
+                                                <button type="button" class="btn btn-success"><a href="../puskesmas/addStokPuskesmas.php?kode_obat=<?= $row["kode_obat"]; ?>"><i class='bx-fw bx bx-navigation'></i></a></button>&nbsp;
+                                                <button type="button" class="btn btn-danger"><a href="hapus.php?id=<?= $row["id"]; ?>" onclick="return confirm('data akan terhapus')"><i class='bx-fw bx bx-message-x'></i></a></button>
                                                 </td>
                                                 </tr>
                                             <?php $i++; ?>
                                         <?php endforeach; ?>
                                     </tbody>
                                 </table>
-                                         
-                             </div>
+                            </div>
                         </div>
                     </div>
                 </main>

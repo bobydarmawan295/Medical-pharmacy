@@ -1,9 +1,10 @@
 <?php 
-require_once 'functions.php';
+require_once 'functionsPuskesmas.php';
+
 
 $id = $_GET['id'];
 
-$stok = query("SELECT * FROM stok INNER JOIN obat ON stok.kode_obat = obat.kode_obat WHERE id= '$id' ORDER BY updated_at DESC")[0];
+$stok = query("SELECT * FROM stokPuskesmas INNER JOIN obat ON stokPuskesmas.kode_obat = obat.kode_obat WHERE id= '$id'")[0];
 
     if( isset($_POST['submit']) ){
         // ambil data form
@@ -12,7 +13,7 @@ $stok = query("SELECT * FROM stok INNER JOIN obat ON stok.kode_obat = obat.kode_
             echo '
             <script>
             alert("Berhasil!");
-            document.location.href = "stokObat.php";
+            document.location.href = "stokPuskesmas.php";
             </script>
             ';
         
@@ -20,7 +21,7 @@ $stok = query("SELECT * FROM stok INNER JOIN obat ON stok.kode_obat = obat.kode_
         echo '
             <script type="text/javascript">
             swal("Gagal", "Data gagal diubah!", "failed");
-            document.location.href = "obat.php";
+            document.location.href = "stokPuskesmas.php";
             </script>
             ';
         } 
@@ -50,7 +51,7 @@ $stok = query("SELECT * FROM stok INNER JOIN obat ON stok.kode_obat = obat.kode_
                 </div>
                 <div class="form-group">
                     <label for="nama_obat">Nama Obat</label>
-                    <select name="nama_obat" id="nama_obat" class="form-control" >
+                    <select name="nama_obat" id="nama_obat" class="form-control" required disabled>
                         <option value="<?= $stok['kode_obat'] ?>"><?= $stok['nama_obat'] ?></option>
                         <?php 
                             $sql_obat = pg_query($conn, "SELECT * FROM obat ORDER BY nama_obat ASC") or die(pg_error($conn));
@@ -63,7 +64,7 @@ $stok = query("SELECT * FROM stok INNER JOIN obat ON stok.kode_obat = obat.kode_
                 </div>
                 <div class="form-group">
                     <label for="satuan">Satuan : </label>
-                    <select name="satuan" id="satuan" class="form-control">
+                    <select name="satuan" id="satuan" class="form-control" required>
                         <option value="<?= $stok['satuan'] ?>"><?= $stok['satuan'] ?></option>
                         <option value="ampul">ampul</option>
                         <option value="botol">botol</option>
@@ -77,14 +78,14 @@ $stok = query("SELECT * FROM stok INNER JOIN obat ON stok.kode_obat = obat.kode_
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">jumlah : </label>
-                    <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan satuan" name="jumlah" value="<?= $stok['jumlah'] ?>">
+                    <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan satuan" name="jumlah" value="<?= $stok['jumlah_stok'] ?>">
                 </div>
                 <!-- <div class="form-check">
                     <input type="checkbox" class="form-check-input" id="exampleCheck1">
                     <label class="form-check-label" for="exampleCheck1">Data sudah benar</label>
                 </div> -->
                 <button type="submit" class="btn btn-primary" name="submit">Submit</button>
-                <button type="button" class="btn btn-secondary"><a href="stokObat.php">Kembali</a></button>
+                <button type="button" class="btn btn-secondary"><a href="stokPuskesmas.php">Kembali</a></button>
             </form>
         </div>
     </div>

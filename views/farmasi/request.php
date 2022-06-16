@@ -2,9 +2,10 @@
   require_once '../partials/header.php';
   require_once 'functions.php';
 
-  $request= query("SELECT * FROM distribusi
-  INNER JOIN puskesmas ON distribusi.kode_puskesmas = puskesmas.kode_puskesmas  ORDER BY waktu_distribusi DESC 
-  ");
+  $request= query("SELECT * FROM request
+                INNER JOIN puskesmas ON request.kode_puskesmas = puskesmas.kode_puskesmas  ORDER BY tanggal DESC 
+                ");
+
   
 ?>
 
@@ -25,18 +26,19 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Nama Puskesmas</th>
-                                            <th>Jumlah Distribusi</th>
-                                            <th>waktu_distribusi</th>
-                                            <th>Status</th>
+                                            <th>Nama obat</th>
+                                            <th>No Telpon</th>
+                                            <th>Tanggal Request</th>
+                                            <th>Details</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>No</th>
                                             <th>Nama Puskesmas</th>
-                                            <th>Jumlah Distribusi</th>
-                                            <th>waktu_distribusi</th>
-                                            <th>Status</th>
+                                            <th>Nama obat</th>
+                                            <th>No Telpon</th>
+                                            <th>Tanggal Request</th>
+                                            <th>Details</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -45,11 +47,12 @@
                                                 <tr>
                                                 <td><?= $i ?></td>
                                                 <td><?= $row["nama_puskesmas"] ?></td>
-                                                <td><?= $row["jumlah_distribusi"] ?></td>
-                                                <td><?= $row["waktu_distribusi"] ?></td>
+                                                <td><?= $row["alamat"] ?></td>
+                                                <td><?= $row["no_telpon"] ?></td>
+                                                <td><?= $row["tanggal"] ?></td>
                                                 <td>
 
-                                                <button type="button" class="btn btn-success"><a href="detailRequest.php?kode_puskesmas=<?= $row["kode_puskesmas"]; ?>">Berhasil</a></button>&nbsp;
+                                                <button type="button" class="btn btn-info"><a href="detailRequest.php?kode_puskesmas=<?= $row["kode_puskesmas"]; ?>"><i class='bx bx-detail'></i></a></button>&nbsp;
 
                                                 </td>
                                                 </tr>
@@ -57,8 +60,7 @@
                                         <?php endforeach; ?>
                                     </tbody>
                                 </table>
-                                         
-                             </div>
+                            </div>
                         </div>
                     </div>
                 </main>

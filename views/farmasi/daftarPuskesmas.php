@@ -3,7 +3,8 @@
   require_once 'functions.php';
 
   $puskesmas = query("SELECT * FROM puskesmas");
-  
+    
+  // didalam nya terdapat riwayat tiap puskesmas
 ?>
 
 <div id="layoutSidenav_content">
@@ -42,6 +43,5 @@
         </div>
      
      <?php 
-     require_once '../partials/header.php';
      require_once '../partials/footer.php' 
      ?>

@@ -1,10 +1,9 @@
 <?php 
-    require_once '../partials/header.php';
-    
+  require_once '../partials/header.php';
+  
 ?>
 
-    
-              <div id="layoutSidenav_content">
+<div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
                         <div class="card mb-4">
@@ -36,7 +35,7 @@
                                             <div class="tab-pane fade active show" id="account-general">
                                 
                                               <div class="card-body media align-items-center">
-                                                <img src="../assets/images/profile.png" alt="profile" class="d-block ui-w-80" width="100px">
+                                                <img src="../../assets/images/profile.png" alt="profile" class="d-block ui-w-80">
                                                 <div class="media-body ml-4">
                                                   <label class="btn btn-outline-primary">
                                                     Upload new photo
@@ -264,5 +263,4 @@
                     </div>
                 </main>
         </div>
-    </div>
-    <?php require_once '../partials/footer.php' ?>
+<?php require_once '../partials/footer.php' ?>
