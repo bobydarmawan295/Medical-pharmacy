@@ -1,12 +1,17 @@
 <?php 
+
   require_once '../partials/header.php';
   require_once 'functions.php';
+  if(isset($_SESSION["level"]) == "user" && $_SESSION["level"] != "admin"){
+    echo "anda tidak berhak akses halaman ini";
+    exit;
+  }
 
-  $request= query("SELECT * FROM request
-                INNER JOIN puskesmas ON request.kode_puskesmas = puskesmas.kode_puskesmas  ORDER BY tanggal DESC 
+  $request= query("SELECT puskesmas_id, puskesmas.nama_puskesmas as nama, puskesmas.alamat as alamat,
+  puskesmas.no_telpon as no_telpon, tanggal FROM request
+                INNER JOIN puskesmas ON request.puskesmas_id = puskesmas.kode_puskesmas GROUP BY puskesmas_id,nama, alamat,no_telpon, tanggal ORDER BY tanggal DESC  
                 ");
 
-  
 ?>
 
         <div id="layoutSidenav_content">
@@ -18,7 +23,7 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                Riwayat Distribusi Obat
+                                Daftar Request obat
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
@@ -26,7 +31,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Nama Puskesmas</th>
-                                            <th>Nama obat</th>
+                                            <th>Alamat</th>
                                             <th>No Telpon</th>
                                             <th>Tanggal Request</th>
                                             <th>Details</th>
@@ -34,8 +39,9 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
+                                            <th>No</th>
                                             <th>Nama Puskesmas</th>
-                                            <th>Nama obat</th>
+                                            <th>Alamat</th>
                                             <th>No Telpon</th>
                                             <th>Tanggal Request</th>
                                             <th>Details</th>
@@ -46,13 +52,13 @@
                                         <?php foreach( $request as $row ) : ?>
                                                 <tr>
                                                 <td><?= $i ?></td>
-                                                <td><?= $row["nama_puskesmas"] ?></td>
+                                                <td><?= $row["nama"] ?></td>
                                                 <td><?= $row["alamat"] ?></td>
                                                 <td><?= $row["no_telpon"] ?></td>
                                                 <td><?= $row["tanggal"] ?></td>
                                                 <td>
 
-                                                <button type="button" class="btn btn-info"><a href="detailRequest.php?kode_puskesmas=<?= $row["kode_puskesmas"]; ?>"><i class='bx bx-detail'></i></a></button>&nbsp;
+                                                <button type="button" class="btn btn-info"><a href="detailRequest.php?kode_puskesmas=<?= $row["puskesmas_id"]; ?>"><i class='bx bx-detail'></i></a></button>&nbsp;
 
                                                 </td>
                                                 </tr>

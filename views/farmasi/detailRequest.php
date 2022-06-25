@@ -1,13 +1,19 @@
 <?php 
   require_once '../partials/header.php';
   require_once 'functions.php';
+  if(isset($_SESSION["level"]) == "user" && $_SESSION["level"] != "admin"){
+    echo "anda tidak berhak akses halaman ini";
+    exit;
+  }
 
   $id = $_GET['kode_puskesmas'];
  
   $request= query("SELECT * FROM request
                 INNER JOIN obat ON request.kode_obat = obat.kode_obat
-                WHERE kode_puskesmas = '$id'
+                -- INNER JOIN stok ON request.id_stok = stok.id
+                WHERE puskesmas_id = '$id'
                 ");
+
 // $stok = query("SELECT * FROM stok INNER JOIN obat ON stok.kode_obat = obat.kode_obat WHERE id= '$id'")[0];
 
   
@@ -22,7 +28,7 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                Riwayat Distribusi Obat
+                                Detail Request Obat
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
@@ -51,8 +57,8 @@
                                                 <td><?= $row["jumlah_request"] ?></td>
                                                 <td><?= $row["satuan_obat"] ?></td>
                                                 <td>
-                                                <button type="button" class="btn btn-success"><a href="../puskesmas/addStokPuskesmas.php?kode_obat=<?= $row["kode_obat"]; ?>"><i class='bx-fw bx bx-navigation'></i></a></button>&nbsp;
-                                                <button type="button" class="btn btn-danger"><a href="hapus.php?id=<?= $row["id"]; ?>" onclick="return confirm('data akan terhapus')"><i class='bx-fw bx bx-message-x'></i></a></button>
+                                                <button type="button" class="btn btn-success"><a href="./kirimObat.php?kode_obat=<?= $row["kode_obat"]; ?>&kode_puskesmas=<?= $id; ?>&id=<?= $row["id_request"]; ?>"><i class='bx-fw bx bx-navigation'></i></a></button>&nbsp;
+                                                <button type="button" class="btn btn-danger"><a href="reject.php?id=<?= $row["id_request"]; ?>&kode_obat=<?= $row["kode_obat"]; ?>"><i class='bx-fw bx bx-message-x'></i></a></button>
                                                 </td>
                                                 </tr>
                                             <?php $i++; ?>

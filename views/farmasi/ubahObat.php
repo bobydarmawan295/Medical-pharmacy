@@ -1,5 +1,10 @@
 <?php 
+require_once '../partials/header.php';
 require_once 'functions.php';
+if(isset($_SESSION["level"]) == "user" && $_SESSION["level"] != "admin"){
+    echo "anda tidak berhak akses halaman ini";
+    exit;
+  }
 
 $id = $_GET['id'];
 
@@ -9,9 +14,9 @@ $stok = query("SELECT * FROM stok INNER JOIN obat ON stok.kode_obat = obat.kode_
         // ambil data form
 
         if( ubah($_POST) > 0 ){
+            $_SESSION['eksekusi'] = "ubah";
             echo '
             <script>
-            alert("Berhasil!");
             document.location.href = "stokObat.php";
             </script>
             ';
@@ -50,7 +55,7 @@ $stok = query("SELECT * FROM stok INNER JOIN obat ON stok.kode_obat = obat.kode_
                 </div>
                 <div class="form-group">
                     <label for="nama_obat">Nama Obat</label>
-                    <select name="nama_obat" id="nama_obat" class="form-control" >
+                    <select name="nama_obat" id="nama_obat" class="form-control" disabled>
                         <option value="<?= $stok['kode_obat'] ?>"><?= $stok['nama_obat'] ?></option>
                         <?php 
                             $sql_obat = pg_query($conn, "SELECT * FROM obat ORDER BY nama_obat ASC") or die(pg_error($conn));
@@ -63,7 +68,7 @@ $stok = query("SELECT * FROM stok INNER JOIN obat ON stok.kode_obat = obat.kode_
                 </div>
                 <div class="form-group">
                     <label for="satuan">Satuan : </label>
-                    <select name="satuan" id="satuan" class="form-control">
+                    <select name="satuan" id="satuan" class="form-control" >
                         <option value="<?= $stok['satuan'] ?>"><?= $stok['satuan'] ?></option>
                         <option value="ampul">ampul</option>
                         <option value="botol">botol</option>

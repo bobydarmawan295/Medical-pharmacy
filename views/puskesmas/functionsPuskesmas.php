@@ -4,6 +4,10 @@
     function query($query){
         global $conn;
         $result = pg_query($conn, $query);
+        if(!$result){
+            echo "An error occurred.\n";
+            exit;
+       }
         $rows = [];
         while( $row = pg_fetch_assoc($result) ){
             $rows[] = $row;
@@ -12,7 +16,7 @@
         return $rows;
     }
 
-    function tambah($data){
+    function kirim($data){
         global $conn;
         // $kode_obat = htmlspecialchars($data['kode_obat']);
         $nama_obat = htmlspecialchars($data['nama_obat']);

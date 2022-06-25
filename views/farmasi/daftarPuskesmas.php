@@ -2,6 +2,11 @@
   require_once '../partials/header.php';
   require_once 'functions.php';
 
+  if(isset($_SESSION["level"]) == "user" && $_SESSION["level"] != "admin"){
+    echo "anda tidak berhak akses halaman ini";
+    exit;
+  }
+
   $puskesmas = query("SELECT * FROM puskesmas");
     
   // didalam nya terdapat riwayat tiap puskesmas

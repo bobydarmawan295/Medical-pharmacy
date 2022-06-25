@@ -95,6 +95,7 @@ a:focus {
   background: #dfe0e2;
 }
 
+
 #sidebar ul li a:active {
   color: #100db1;
   background: #dfe0e2;
@@ -157,6 +158,12 @@ a.article:hover {
 
 #sidebarCollapse{
   color: fff;
+}
+
+select[readonly] {
+  background: #eee; /*Simular campo inativo - Sugestão @GabrielRodrigues*/
+  pointer-events: none;
+  touch-action: none;
 }
 
 canvas{

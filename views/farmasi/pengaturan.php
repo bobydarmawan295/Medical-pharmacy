@@ -1,6 +1,10 @@
 <?php 
   require_once '../partials/header.php';
   require_once 'functions.php';
+  if(isset($_SESSION["level"]) == "user" && $_SESSION["level"] != "admin"){
+    echo "anda tidak berhak akses alaman ini";
+    exit;
+  }
   
 ?>
 

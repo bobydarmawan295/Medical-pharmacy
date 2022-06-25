@@ -1,9 +1,17 @@
 <?php 
+
 require_once 'functions.php';
 require_once '../partials/header.php';
 
+if(isset($_SESSION["level"]) == "user" && $_SESSION["level"] != "admin"){
+    echo "anda tidak berhak akses halaman ini";
+    exit;
+  }
+
+
 if( isset($_POST['submit']) ){
     // ambil data form
+    
 
      if( tambah($_POST) > 0 ){
         // echo "<script type='text/javascript'>
@@ -18,9 +26,9 @@ if( isset($_POST['submit']) ){
         //   document.location.replace('obat.php');
         // } ,1000); 
         // </script>";
+        $_SESSION['eksekusi'] = "tambah";
         echo "
         <script>
-        alert('berhasil');
         document.location.href = 'stokObat.php';
         </script>
      ";
@@ -28,7 +36,6 @@ if( isset($_POST['submit']) ){
         echo "
             <script>
             alert('gagal');
-            
             </script>
          ";
      }

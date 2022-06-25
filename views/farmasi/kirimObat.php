@@ -2,10 +2,42 @@
 require_once 'functions.php';
 require_once '../partials/header.php';
 
+if(isset($_SESSION["level"]) == "user" && $_SESSION["level"] != "admin"){
+    echo "anda tidak berhak akses halaman ini";
+    exit;
+  }
+
+$kode_obat = $_GET["kode_obat"];
+$kode_puskesmas = $_GET['kode_puskesmas'];
+$id= $_GET['id'];
+
+$req = query("SELECT * FROM request INNER JOIN obat ON request.kode_obat = obat.kode_obat WHERE request.kode_obat= '$kode_obat' ORDER BY tanggal DESC")[0];
+
 if( isset($_POST['submit']) ){
     // ambil data form
+    $kode_obat = $_GET["kode_obat"];
+    $kode_puskesmas = $_GET['kode_puskesmas'];
+    $jumlah = $_POST["jumlah"];
+    $req = query("SELECT * FROM stok WHERE kode_obat = '$kode_obat'")[0];
+    
+    if ($req['jumlah'] - $jumlah <= 0) {
+        ?>
+        <script language="JavaScript">
+            alert('Oops! Jumlah pengeluaran lebih besar dari stok ...');
+            document.location.href = 'stokObat.php';
+        </script>
+        <?php
+    }else{
+        $sisa = $req['jumlah'] - $jumlah;
+        $query = "UPDATE stok SET
+    jumlah = '$sisa'
+    WHERE kode_obat = '$kode_obat'";
+    $ubah = pg_query($conn, $query);
 
-     if( tambah($_POST) > 0 ){
+    $query2 = "DELETE FROM request WHERE id_request='$id'";
+    $hapus= pg_query($conn, $query2);
+
+     if( kirim($_POST) > 0 && $ubah > 0 && history($_POST) >0 && $hapus >0 && notifPuskesmas($_POST) >0){
         // echo "<script type='text/javascript'>
         // setTimeout(function () { 
         //     swal({
@@ -13,25 +45,27 @@ if( isset($_POST['submit']) ){
         //         text: 'You clicked the button!',
         //         icon: 'success',
         //       });   
-        // },100);  
-        // window.setTimeout(function(){ 
-        //   document.location.replace('obat.php');
-        // } ,1000); 
+        // },1000);  
+        // document.location.href = 'request.php';
         // </script>";
-        echo "
-        <script>
-        alert('berhasil');
-        document.location.href = 'stokObat.php';
-        </script>
-     ";
+         echo "
+         <script>
+         alert('berhasil');
+         document.location.href = 'request.php';
+         </script>
+      ";
      }else{
         echo "
             <script>
             alert('gagal');
-            
+            document.location.href = 'request.php';
             </script>
          ";
      }
+
+    }
+
+    
     
 }
 
@@ -44,11 +78,17 @@ if( isset($_POST['submit']) ){
         <div class="card-body">
             <form action="" method="post">
                 <div class="form-group">
+                    <input type="hidden" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan kode obat" name="kode_obat" value="<?= $kode_obat ?>">
+                </div>
+                <div class="form-group">
+                    <input type="hidden" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan kode obat" name="kode_puskesmas" value="<?= $kode_puskesmas ?>">
+                </div>
+                <div class="form-group">
                     <label for="nama_obat">Nama Obat</label>
-                    <select name="nama_obat" id="nama_obat" class="form-control" required>
-                        <option value="">pilih</option>
+                    <select name="nama_obat" id="nama_obat" class="form-control" required readonly>
+                        <option value="<?= $req['kode_obat'] ?>"><?= $req['nama_obat'] ?></option>
                         <?php 
-                            $sql_obat = pg_query($conn, "SELECT * FROM obat ORDER BY nama_obat ASC") or die(pg_error($conn));
+                            $sql_obat = pg_query($conn, "SELECT * FROM stok INNER JOIN obat ON stok.kode_obat = obat.kode_obat") or die(pg_error($conn));
                             while($data_obat = pg_fetch_array($sql_obat)){
                                 echo '<option value="'.$data_obat['kode_obat'].'">'.$data_obat['nama_obat'].'</option>';
                             }
@@ -61,8 +101,8 @@ if( isset($_POST['submit']) ){
                 </div>
                 <div class="form-group">
                     <label for="satuan">Satuan</label>
-                    <select name="satuan" id="satuan" class="form-control" required>
-                        <option value="">- Pilih -</option>
+                    <select name="satuan" id="satuan" class="form-control" required readonly>
+                    <option value="<?= $req['satuan_obat'] ?>"><?= $req['satuan_obat'] ?></option>
                         <option value="ampul">ampul</option>
                         <option value="botol">botol</option>
                         <option value="kotak">kotak</option>

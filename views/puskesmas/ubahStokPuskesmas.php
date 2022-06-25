@@ -1,19 +1,19 @@
 <?php 
-require_once 'functionsPuskesmas.php';
-
+require_once '../partials/header.php';
 
 $id = $_GET['id'];
 
-$stok = query("SELECT * FROM stokPuskesmas INNER JOIN obat ON stokPuskesmas.kode_obat = obat.kode_obat WHERE id= '$id'")[0];
+$stok = query("SELECT * FROM stokPuskesmas INNER JOIN obat ON stokPuskesmas.obat_id = obat.kode_obat WHERE id= '$id'")[0];
 
     if( isset($_POST['submit']) ){
         // ambil data form
+        $id = $_GET['id'];
 
-        if( ubah($_POST) > 0 ){
+        if( ubahStokPuskesmas($_POST) > 0 ){
+            $_SESSION['eksekusi'] = "ubah";
             echo '
             <script>
             alert("Berhasil!");
-            document.location.href = "stokPuskesmas.php";
             </script>
             ';
         

@@ -2,8 +2,6 @@
     require_once '../partials/header.php';
     
 ?>
-
-    
               <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">

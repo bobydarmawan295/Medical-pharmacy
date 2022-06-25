@@ -7,12 +7,17 @@
     exit;
   }
 
-  $request= query("SELECT  kode_puskesmas,puskesmas.nama_puskesmas,count(kode_obat) as jumlah, COUNT(riwayat.kode_distribusi),puskesmas.alamat as alamat,puskesmas.no_telpon as no_telpon FROM riwayat INNER JOIN puskesmas ON riwayat.puskesmas_code = puskesmas.kode_puskesmas GROUP BY puskesmas.nama_puskesmas,kode_puskesmas"  );
+  $id = $_GET['kode_puskesmas'];
+
+  $request= query("SELECT * FROM riwayat
+  INNER JOIN obat ON riwayat.kode_obat = obat.kode_obat
+--   INNER JOIN stok ON request.id_stok = stok.id
+  WHERE puskesmas_code = '$id'" );
   
 ?>
-
-        <div id="layoutSidenav_content">
+    <div id="layoutSidenav_content">
                 <main>
+                <button type="button" class="btn btn-info text-center ml-4" ><i class='bx-fw bx bx-arrow-back' ></i><a href="riwayatDistribusi.php">&nbsp;Kembali</a></button>
                     <div class="container-fluid px-4">
                         <div class="card mb-4">
                             
@@ -20,30 +25,27 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                Riwayat Distribusi Obat
+                                Detail Riwayat Distribusi Obat
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama Puskesmas</th>
-                                            <th>Jumlah Obat</th>
-                                            <th>Alamat</th>
-                                            <th>No telpon</th>
-                                            <th>Detail</th>
+                                            <th>Nama Obat</th>
+                                            <th>Jumlah Distribusi</th>
+                                            <th>waktu_distribusi</th>
+                                            <th>Aksi</th>
                                             <!-- <th>Status</th> -->
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama Puskesmas</th>
-                                            <th>Jumlah Obat</th>
-                                            <th>Alamat</th>
-                                            <th>No telpon</th>
-                                            <th>Detail</th>
-                                            <!-- <th>Status</th> -->
+                                            <th>Nama Obat</th>
+                                            <th>Jumlah Distribusi</th>
+                                            <th?>waktu_distribusi</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -51,17 +53,12 @@
                                         <?php foreach( $request as $row ) : ?>
                                                 <tr>
                                                 <td><?= $i ?></td>
-                                                <td><?= $row["nama_puskesmas"] ?></td>
-                                                <td><?= $row["jumlah"] ?></td>
-                                                <td><?= $row["alamat"] ?></td>
-                                                <td><?= $row["no_telpon"] ?></td>
-                                                
+                                                <td><?= $row["nama_obat"] ?></td>
+                                                <td><?= $row["jumlah_distribusi"] ?></td>
+                                                <td><?= $row["waktu_distribusi"] ?></td>
                                                 <td>
-
-                                                <button type="button" class="btn btn-info"><a href="detailRiwayat.php?kode_puskesmas=<?= $row["kode_puskesmas"]; ?>"><i class='bx bx-detail'></i></a></button>&nbsp;
-
+                                                <button type="button" class="btn btn-danger"><a href="hapusRiwayat.php?id=<?= $row["kode_distribusi"]; ?>" onclick="return confirm('data akan terhapus')"><i class='bx bx-trash'></i></a></button>
                                                 </td>
-                                               
                                                 </tr>
                                             <?php $i++; ?>
                                         <?php endforeach; ?>

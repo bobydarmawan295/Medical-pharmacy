@@ -1,19 +1,15 @@
 <?php 
-require_once 'functionsPuskesmas.php';
+require_once 'functions.php';
 require_once '../partials/header.php';
+if(isset($_SESSION["level"]) == "user" && $_SESSION["level"] != "admin"){
+    echo "anda tidak berhak akses halaman ini";
+    exit;
+  }
 
 if( isset($_POST['submit']) ){
     // ambil data form
-    $kode_obat = $_GET["kode_obat"];
-    $jumlah = $_POST["jumlah"];
-    $stok = query("SELECT * FROM stok WHERE kode_obat = '$kode_obat'")[0];
-    if(!$stok){
-        echo "An error occurred.\n";
-        exit;
-    }
-    $sisa = $stok['jumlah'] - $jumlah;
-    echo $sisa;
-     if( kirim($_POST) > 0 ){
+
+     if( tambah($_POST) > 0 ){
         // echo "<script type='text/javascript'>
         // setTimeout(function () { 
         //     swal({
@@ -29,18 +25,17 @@ if( isset($_POST['submit']) ){
         echo "
         <script>
         alert('berhasil');
-
+        document.location.href = 'stokObat.php';
         </script>
      ";
      }else{
         echo "
             <script>
             alert('gagal');
-            document.location.href = '../farmasi/stokObat.php';
+            
             </script>
          ";
      }
-    
     
 }
 
@@ -50,9 +45,6 @@ if( isset($_POST['submit']) ){
             <i class="fas fa-table me-1"></i>
             <h2>Form tambah Obat</h2>
         </div>
-        <?php if( isset($error)) : ?>
-            <p style="color:red; font-style:italic;">Username / password salah</p>
-          <?php endif; ?>
         <div class="card-body">
             <form action="" method="post">
                 <div class="form-group">
@@ -60,9 +52,9 @@ if( isset($_POST['submit']) ){
                     <select name="nama_obat" id="nama_obat" class="form-control" required>
                         <option value="">pilih</option>
                         <?php 
-                            $sql_obat = pg_query($conn, "SELECT * FROM stok INNER JOIN obat ON stok.kode_obat = obat.kode_obat") or die(pg_error($conn));
+                            $sql_obat = pg_query($conn, "SELECT * FROM obat ORDER BY nama_obat ASC") or die(pg_error($conn));
                             while($data_obat = pg_fetch_array($sql_obat)){
-                                echo '<option value="'.$data_obat['id'].'">'.$data_obat['nama_obat'].'</option>';
+                                echo '<option value="'.$data_obat['kode_obat'].'">'.$data_obat['nama_obat'].'</option>';
                             }
                         ?>'</option>';
                             

@@ -1,14 +1,13 @@
 <?php
-    require_once '../partials/header.php';
     require_once 'functions.php';
 
     $id = $_GET['id'];
 
-    if( hapus($id) > 0 ){
-        $_SESSION['eksekusi'] = "hapus";
+    if( hapusRiwayat($id) > 0 ){
         echo "
            <script>
-           document.location.href = 'stokObat.php';
+           alert('data berhasil dihapus');
+           document.location.href = 'riwayatDistribusi.php';
            </script>
         ";
        
@@ -16,7 +15,7 @@
        echo "
            <script>
            alert('gagal dihapus');
-           document.location.href = 'stokObat.php';
+           document.location.href = 'riwayatDitribusi.php';
            </script>
         ";
     }
